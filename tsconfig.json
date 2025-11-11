@@ -20,7 +20,10 @@
       "$lib/*": ["./src/lib/*"],
       "$components/*": ["./src/components/*"],
       "test/*": ["./test/*"]
-    }
+    },
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
     "test/**/*.ts",
