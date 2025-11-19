@@ -19,8 +19,8 @@ jobs:
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          retore-key: |
-            ${{runner.os}}-bun-
+          retore-keys: |
+            ${{ runner.os }}-bun-
       - run: bun install --frozen-lockfiels #== npm ci
       - run: bun run test
       - run: bun run build
@@ -36,7 +36,7 @@ jobs:
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          retore-key: |
-            ${{runner.os}}-bun-
+          retore-keys: |
+            ${{ runner.os }}-bun-
       - run: bun install
       - run: bun run build
