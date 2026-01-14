@@ -15,7 +15,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - uses: actions/cache@v4
-        id: bun-cache
+        id: bun-cache #on node we can use cache directly from setup
         with:
           path: ~/.bun/install/cache
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
