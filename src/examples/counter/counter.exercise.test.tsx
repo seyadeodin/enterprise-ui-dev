@@ -3,16 +3,15 @@ import { screen } from '@testing-library/react';
 import Counter from '.';
 import { setup } from './test/utilities';
 
-
-const renderCounter = (initialCount: number) => {
-  const { user, ...rest } = render(<Counter initialCount={initialCount}/>);
-  
-  const currentCount = screen.getByTestId("current-count");
-  const incrementButton = screen.getByRole("button", {name: /increment/i });
-  const resetButton = screen.getByRole("button", { name: /reset/i})
-  
-  return { user, currentCount, incrementButton, resetButton, ...rest }
-}
+// const renderCounter = (initialCount: number) => {
+//   const { user, ...rest } = render(<Counter initialCount={initialCount}/>);
+//   
+//   const currentCount = screen.getByTestId("current-count");
+//   const incrementButton = screen.getByRole("button", {name: /increment/i });
+//   const resetButton = screen.getByRole("button", { name: /reset/i})
+//   
+//   return { user, currentCount, incrementButton, resetButton, ...rest }
+// }
 
 test('it should render the component', () => {
   setup(<Counter/>)

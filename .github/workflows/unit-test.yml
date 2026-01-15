@@ -38,7 +38,12 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install
       - run: bun run build
-  coverage:
+      - uses: action/upload-artifact@v3
+        name: Build artifact
+        with:
+          name: build-artifact
+          path: dist
+  coverage: # we make it a separate step from test when we have threshold on
     runs-on: ubuntu-latest
     steps:
       - name: Checkout respository
@@ -54,8 +59,8 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install --frozen-lockfiels #== npm ci
       - run: bun run test --coverage
-      - uses: actions/upload-artifact@v3
-        name: Archive coerage report
+      - uses: actions/upload-artifact@v3 #upload the file generated in the  CI as an artifact
+        name: Archive coverage report
         with:
           name: coverage-report
           path: coverage
