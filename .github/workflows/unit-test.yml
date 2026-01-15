@@ -23,8 +23,6 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install --frozen-lockfiels #== npm ci
       - run: bun run test
-      - run: bun run build
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -40,3 +38,24 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install
       - run: bun run build
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout respository
+        uses: actions/checkout@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        id: bun-cache #on node we can use cache directly from setup
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      - run: bun install --frozen-lockfiels #== npm ci
+      - run: bun run test --coverage
+      - uses: actions/upload-artifact@v3
+        name: Archive coerage report
+        with:
+          name: coverage-report
+          path: coverage
