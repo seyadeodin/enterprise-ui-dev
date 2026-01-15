@@ -10,6 +10,7 @@ export default defineConfig({
     },
   },
   test: {
+    setupFiles: ["./test/setup.ts"],
     globals: true,
     exclude: [...defaultExclude, '**/*.svelte**'],
   },

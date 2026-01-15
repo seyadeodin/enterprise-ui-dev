@@ -2,9 +2,9 @@ import FizzBuzz from './examples/fizz-buzz';
 import Counter from './examples/counter';
 import CharacterSearch from './examples/character-search';
 import SignUp from './examples/sign-up';
-import PackingList from './examples/packing-list';
 import ObstacleCourse from './examples/obstacle-course';
 import TimeZone from './examples/time-zone';
+import { PackingList } from './examples/packing-list';
 
 const Application = () => {
   return (

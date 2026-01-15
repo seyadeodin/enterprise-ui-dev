@@ -7,13 +7,60 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  unit-test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout respository
+        uses: actions/checkout@v3
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-      - run: bun install
+      - uses: actions/cache@v4
+        id: bun-cache #on node we can use cache directly from setup
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      - run: bun install --frozen-lockfiels #== npm ci
       - run: bun run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        id: bun-cache
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      - run: bun install
       - run: bun run build
+      - uses: actions/upload-artifact@v4
+        name: Build artifact
+        with:
+          name: build-artifact
+          path: dist
+  coverage: # we make it a separate step from test when we have threshold on
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout respository
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        id: bun-cache #on node we can use cache directly from setup
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      - run: bun install --frozen-lockfiels #== npm ci
+      - run: bun run test --coverage
+      - uses: actions/upload-artifact@v4 #upload the file generated in the  CI as an artifact
+        name: Archive coverage report
+        with:
+          name: coverage-report
+          path: coverage

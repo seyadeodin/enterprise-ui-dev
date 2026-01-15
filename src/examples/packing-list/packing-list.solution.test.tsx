@@ -1,5 +1,6 @@
-import { render, screen } from 'test/utilities';
-import PackingList from '.';
+import { render, } from './test/utilities';
+import { PackingList } from '.';
+import { screen } from '@testing-library/react';
 
 it('renders the Packing List application', () => {
   render(<PackingList />);
