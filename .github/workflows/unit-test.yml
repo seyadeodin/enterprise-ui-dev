@@ -38,7 +38,7 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install
       - run: bun run build
-      - uses: action/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         name: Build artifact
         with:
           name: build-artifact
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout respository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - uses: actions/cache@v4
@@ -59,7 +59,7 @@ jobs:
             ${{ runner.os }}-bun-
       - run: bun install --frozen-lockfiels #== npm ci
       - run: bun run test --coverage
-      - uses: actions/upload-artifact@v3 #upload the file generated in the  CI as an artifact
+      - uses: actions/upload-artifact@v4 #upload the file generated in the  CI as an artifact
         name: Archive coverage report
         with:
           name: coverage-report
